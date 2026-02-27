@@ -127,7 +127,9 @@ unsigned power(unsigned x, unsigned y) {
 }
 
 unsigned tail_power(unsigned x, unsigned y, unsigned a){
-    if 
+    if (y == 0) return ;
+
+    return 
 }
 
 unsigned product(unsigned x, unsigned y) {
