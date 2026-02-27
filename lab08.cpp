@@ -7,8 +7,11 @@ using namespace std;
 *******************************************************************************/
 
 unsigned fact(unsigned);
+unsigned tail_fact(unsigned, unsigned);
 unsigned fib(unsigned);
+unsigned tail_fib(unsigned, int, int);
 unsigned mult(unsigned, unsigned);
+unsigned tail_mult(unsigned, unsigned, unsigned);
 unsigned power(unsigned, unsigned);
 unsigned product(unsigned, unsigned);
 
@@ -26,16 +29,16 @@ unsigned product(unsigned, unsigned);
 
 int main() {
     // try a ridiculous case that won't work without tail recursion
-    cout << "6 * 123000 = " << mult(6, 123000) << endl;
+    cout << "6 * 123000 = " << tail_mult(6, 123000, 0) << endl;
     
     // these functions can't demonstrate the usefulness of tail recursion
     // due to data type overflow, but still, good practice
     cout << "3 ^ 10 = " << power(3, 10) << endl;
     cout << "8 * 9 * ... * 15 = " << product(8, 15) << endl;
-    cout << "10! = " << fact(10) << endl;
+    cout << "10! = " << tail_fact(10, 1) << endl;
 
     // without tail recursion, this next call is going to take a while
-    cout << "50th Fibonacci number is " << fib(50) << endl;
+    cout << "50th Fibonacci number is " << tail_fib(50, 0, 1) << endl;
 
     // terminate
     return 0;
@@ -57,6 +60,12 @@ unsigned fact(unsigned n) {
     return res * n;
 }
 
+unsigned tail_fact(unsigned n, unsigned a){
+    if (n <= 1) return a;
+
+    return tail_fact(n-1, a * n);
+}
+
 unsigned fib(unsigned n) {
     // base case 1
     if (n == 0) {
@@ -72,6 +81,17 @@ unsigned fib(unsigned n) {
     return fib(n - 1) + fib(n - 2);
 }
 
+unsigned tail_fib(unsigned n, int a = 0, int b = 1){
+    if (n == 0){
+        return a;
+    }
+    if (n == 1){
+        return b;
+    }
+
+    return tail_fib(n - 1, b, b + a);
+}
+
 unsigned mult(unsigned x, unsigned y) {
     // base case
     if (y == 0) {
@@ -83,6 +103,18 @@ unsigned mult(unsigned x, unsigned y) {
     return res + x;
 }
 
+unsigned tail_mult(unsigned x, unsigned y, unsigned a){
+    if (y == 0) return a; //it's like counting down the y value, repeating the process y times
+    //the a keeps getting added by x amount each run, for y times.
+    //in the end return a, which has the final multiplied/added value
+    return tail_mult(x, y - 1 , a + x);
+
+    /* to use this to make sure it "recycles" stacks
+    g++ -O2 lab08.cpp -o lab08
+    ./lab08
+    */
+}
+
 unsigned power(unsigned x, unsigned y) {
     // base case
     if (y == 0) {
@@ -92,6 +124,10 @@ unsigned power(unsigned x, unsigned y) {
     // recursive case
     unsigned res = power(x, y - 1);
     return res * x;
+}
+
+unsigned tail_power(unsigned x, unsigned y, unsigned a){
+    if 
 }
 
 unsigned product(unsigned x, unsigned y) {
