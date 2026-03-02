@@ -13,6 +13,7 @@ unsigned tail_fib(unsigned, int, int);
 unsigned mult(unsigned, unsigned);
 unsigned tail_mult(unsigned, unsigned, unsigned);
 unsigned power(unsigned, unsigned);
+unsigned tail_power(unsigned, unsigned, unsigned);
 unsigned product(unsigned, unsigned);
 
 /*******************************************************************************
@@ -127,9 +128,9 @@ unsigned power(unsigned x, unsigned y) {
 }
 
 unsigned tail_power(unsigned x, unsigned y, unsigned a){
-    if (y == 0) return ;
+    if (y == 0) return a;
 
-    return 
+    return tail_power(x, y - 1, a * x);
 }
 
 unsigned product(unsigned x, unsigned y) {
