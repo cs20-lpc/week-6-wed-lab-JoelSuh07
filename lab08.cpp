@@ -35,8 +35,8 @@ int main() {
     
     // these functions can't demonstrate the usefulness of tail recursion
     // due to data type overflow, but still, good practice
-    cout << "3 ^ 10 = " << tail_power(3, 10) << endl;
-    cout << "8 * 9 * ... * 15 = " << tail_product(8, 15) << endl;
+    cout << "3 ^ 10 = " << tail_power(3, 10, 0) << endl;
+    cout << "8 * 9 * ... * 15 = " << tail_product(8, 15, 8) << endl;
     cout << "10! = " << tail_fact(10, 1) << endl;
 
     // without tail recursion, this next call is going to take a while
