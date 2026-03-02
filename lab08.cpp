@@ -15,6 +15,7 @@ unsigned tail_mult(unsigned, unsigned, unsigned);
 unsigned power(unsigned, unsigned);
 unsigned tail_power(unsigned, unsigned, unsigned);
 unsigned product(unsigned, unsigned);
+unsigned tail_product(unsigned, unsigned, unsigned);
 
 /*******************************************************************************
  * Description:
@@ -34,8 +35,8 @@ int main() {
     
     // these functions can't demonstrate the usefulness of tail recursion
     // due to data type overflow, but still, good practice
-    cout << "3 ^ 10 = " << power(3, 10) << endl;
-    cout << "8 * 9 * ... * 15 = " << product(8, 15) << endl;
+    cout << "3 ^ 10 = " << tail_power(3, 10) << endl;
+    cout << "8 * 9 * ... * 15 = " << tail_product(8, 15) << endl;
     cout << "10! = " << tail_fact(10, 1) << endl;
 
     // without tail recursion, this next call is going to take a while
@@ -142,4 +143,10 @@ unsigned product(unsigned x, unsigned y) {
     // recursive case
     unsigned p = product(x + 1, y);
     return p * x;
+}
+
+unsigned tail_product(unsigned x, unsigned y, unsigned a){
+    if (y == 0) return x;
+
+    return tail_product(x * a, y - 1, a + 1);
 }
