@@ -35,8 +35,8 @@ int main() {
     
     // these functions can't demonstrate the usefulness of tail recursion
     // due to data type overflow, but still, good practice
-    cout << "3 ^ 10 = " << tail_power(3, 10, 0) << endl;
-    cout << "8 * 9 * ... * 15 = " << tail_product(8, 15, 8) << endl;
+    cout << "3 ^ 10 = " << tail_power(3, 10, 1) << endl;
+    cout << "8 * 9 * ... * 15 = " << tail_product(8, 15, 9) << endl;
     cout << "10! = " << tail_fact(10, 1) << endl;
 
     // without tail recursion, this next call is going to take a while
@@ -112,7 +112,7 @@ unsigned tail_mult(unsigned x, unsigned y, unsigned a){
     return tail_mult(x, y - 1 , a + x);
 
     /* to use this to make sure it "recycles" stacks
-    g++ -O2 lab08.cpp -o lab08
+    g++ -O3 -foptimize-sibling-calls lab08.cpp -o lab08
     ./lab08
     */
 }
@@ -146,7 +146,7 @@ unsigned product(unsigned x, unsigned y) {
 }
 
 unsigned tail_product(unsigned x, unsigned y, unsigned a){
-    if (y == 0) return x;
+    if (y == a) return x * a;
 
-    return tail_product(x * a, y - 1, a + 1);
+    return tail_product(x * a, y, a + 1);
 }
